@@ -88,7 +88,8 @@
     const a = el('span', 'pv-av'); a.style.setProperty('--s', px + 'px');
     if (u && u.off) {
       a.classList.add('logo');
-      if (ok(CONFIG.logo)) { const i = new Image(); i.src = CONFIG.logo; i.alt = ''; a.append(i); } else a.textContent = '★';
+      const ai = DR(G('officialAvatar'), 1) || CONFIG.logo;
+if (ok(ai)) { const i = new Image(); i.src = ai; i.alt = ''; a.append(i); } else a.textContent = '★';
       return a;
     }
     const ini = () => { a.replaceChildren(); a.textContent = initial(name); a.style.setProperty('--h', parseInt(h32(String(name || '?')), 36) % 360); };
@@ -101,7 +102,8 @@
     if (k === 'verified') { s.title = 'Verified'; s.setAttribute('role', 'img'); s.setAttribute('aria-label', 'Verified'); s.innerHTML = SVG.check; }
     else if (k === 'admin') {
       s.title = 'Admin'; s.setAttribute('role', 'img'); s.setAttribute('aria-label', 'Admin');
-      if (ok(CONFIG.logo)) { const i = new Image(); i.src = CONFIG.logo; i.alt = ''; s.append(i); } else s.innerHTML = SVG.shield;
+const bi = DR(G('adminBadge'), 1) || CONFIG.logo;
+if (ok(bi)) { const i = new Image(); i.src = bi; i.alt = ''; s.append(i); } else s.innerHTML = SVG.shield;
     } else { s.title = 'One of the most active people here'; s.innerHTML = SVG.star + '<span>Top fan</span>'; }
     return s;
   }
