@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CLASS OF 2026 · The Last Chapter</title>
+<meta name="description" content="CLASS OF 2026 — The Last Chapter. A digital graduation world for our medical school class.">
+<meta property="og:title" content="CLASS OF 2026 · The Last Chapter">
+<link rel="icon" href="assets/icons/graduation_cap.png">
+<link rel="preload" as="image" href="assets/logo.png" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/posts.css">
+<!-- Fonts + Font Awesome load without blocking first paint; text still renders (system font) then swaps in -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Playpen+Sans+Arabic:wght@100..800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Sans:wght@400;600;700&family=Playfair+Display:wght@700;900&family=Playpen+Sans+Arabic:wght@100..800&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</noscript>
+</head>
+<body class="lock">
+
+<div id="fx" aria-hidden="true"></div><div id="cf" aria-hidden="true"></div><div id="toast" role="status"></div>
+<div id="intro" role="dialog" aria-label="Welcome"><div class="ibg" aria-hidden="true"></div>
+<img class="fl" decoding="async" style="left:6%;top:12%;--r:-12deg" src="assets/icons/graduation_cap.png" alt="">
+<img class="fl" decoding="async" style="right:7%;top:16%;--r:10deg;animation-delay:-2s" src="assets/icons/stethoscope.png" alt="">
+<img class="fl" decoding="async" style="left:9%;bottom:14%;--r:8deg;animation-delay:-1s" src="assets/icons/scroll.png" alt="">
+<img class="fl" decoding="async" style="right:8%;bottom:12%;--r:-8deg;animation-delay:-3s" src="assets/icons/hot_beverage.png" alt="">
+<div class="istage"><div class="class-logo"></div><div class="il" id="il" aria-live="polite"></div>
+<button class="lnk" id="skip">SKIP</button></div></div>
+<div id="ov" role="alertdialog" aria-live="polite"><div><img class="cap2" decoding="async" src="assets/icons/graduation_cap.png" alt=""><h2 id="ot"></h2><p id="op"></p></div></div>
+<header><b class="cn"></b>
+<nav id="nv" aria-label="Main"><a href="#home">HOME</a><a href="#countdown">COUNTDOWN</a><a href="#memories">MEMORIES</a><a href="#frame">FRAME</a><a href="#examroad">EXAMS</a><a href="#messages">MESSAGES</a><a href="#events">EVENTS</a></nav>
+<button class="ib" id="sb" aria-label="Toggle sound" aria-pressed="false">🔇</button><button class="ib" id="sh" aria-label="Share">↗</button><button class="ib" id="mb" aria-label="Menu" aria-expanded="false">☰</button></header>
+<div id="an"></div>
+
+<section id="home" class="hero">
+<img class="cut" decoding="async" style="left:3%;top:10%;--r:-12deg;width:clamp(70px,13vw,150px)" src="assets/icons/graduation_cap.png" alt="Graduation cap">
+<img class="cut" decoding="async" style="right:4%;top:9%;--r:10deg" src="assets/icons/scroll.png" alt="Diploma">
+<img class="cut" decoding="async" style="left:5%;bottom:12%;--r:8deg;width:clamp(70px,12vw,140px)" src="assets/icons/stethoscope.png" alt="Stethoscope">
+<img class="cut" decoding="async" style="right:5%;bottom:14%;--r:-8deg" src="assets/icons/lab_coat.png" alt="Lab coat">
+<img class="cut" decoding="async" style="left:44%;bottom:1%;--r:4deg;width:clamp(50px,8vw,90px)" src="assets/icons/hot_beverage.png" alt="Coffee">
+<img class="cut" decoding="async" style="left:20%;top:4%;--r:6deg;width:clamp(40px,6vw,72px)" src="assets/icons/party_popper.png" alt="">
+<img class="cut" decoding="async" style="right:22%;top:3%;--r:-6deg;width:clamp(40px,6vw,72px)" src="assets/icons/star.png" alt="">
+<div class="st"><div class="class-logo"></div><p class="eyebrow cn"></p><h1 id="ht">THE LAST CHAPTER</h1><p class="gd" id="hs"></p>
+<div class="glass cd" id="countdown" role="timer"><div><b id="d">0</b><small>DAYS</small></div><div><b id="h">00</b><small>HOURS</small></div><div><b id="m">00</b><small>MIN</small></div><div><b id="s">00</b><small>SEC</small></div></div>
+<p class="q">“One last chapter.<br/>A thousand memories.”</p></div></section>
+<div class="ticker" aria-hidden="true"><div id="tk"></div></div>
+
+<section id="memories" class="rv"><h2>LATEST MEMORIES</h2><p class="sub">Pinned to the board, one chapter at a time. Tap any photo to open it.</p>
+<div class="chips-wrap"><div class="chips" id="chips" role="group" aria-label="Categories"></div><select id="psort" class="sortsel" aria-label="Sort memories"><option value="new">Newest first</option><option value="old">Oldest first</option></select></div>
+<div class="board" id="board"><svg id="str" aria-hidden="true"></svg><div class="grid" id="grid"></div></div>
+<div class="row"><span id="cnt" class="cnt"></span><button class="btn" id="more">VIEW ALL POSTS</button><button class="btn g" id="add">+ ADD YOUR MEMORY</button></div></section>
+
+<section id="frame" class="rv"><h2>FRAME YOUR PHOTO</h2><p class="sub">Upload your photo, drag to fit the square, and download your own framed picture.</p>
+<div class="framewrap" id="frameWrap">
+<div class="frameStage" id="frameStage"><canvas id="frameCanvas" width="1600" height="1600"></canvas><div class="frameHint" id="frameHint">Tap to add your photo</div></div>
+<div class="frameControls">
+<label class="btn" for="frameFile" id="frameChoose">CHOOSE YOUR PHOTO</label><input type="file" id="frameFile" accept="image/*" hidden>
+<div class="zoomRow" id="zoomRow" hidden><span aria-hidden="true">−</span><input type="range" id="frameZoom" min="1" max="3" step="0.01" value="1" aria-label="Zoom photo"/><span aria-hidden="true">+</span></div>
+<button class="btn g" id="frameDownload" hidden>DOWNLOAD PNG</button>
+<p class="fnote">Drag the photo to reposition it · pinch or use the slider to zoom</p>
+</div>
+<div class="lockOverlay" id="frameLock" hidden><div class="lockBox"><span class="eyebrow">COMING SOON</span><span class="lk" aria-hidden="true">🔒</span><b>Frame Your Photo is Locked</b><p>It unlocks on <span id="frameLockDate"></span> — come back then to add your photo.</p></div></div>
+</div></section>
+
+<section id="examroad" class="rv"><h2>IN SEARCH OF GRADUATION</h2><p class="sub">Six stops on the map, then the cap goes up. Each one checks itself off once the exam ends.</p>
+<div class="examroad"><div class="stops" id="stops"></div></div></section>
+
+<section id="years" class="rv"><h2>OUR YEARS</h2><p class="sub">Five years, five plot twists.</p><div class="tl" id="tl"></div></section>
+
+<section id="stats" class="rv"><h2>BY THE NUMBERS</h2><p class="sub">Medical school, counted. Some things can't be counted.</p>
+<div class="glass days"><small id="sy"></small><b id="sd">0</b><span>DAYS</span><small id="sn"></small></div>
+<div class="sg" id="sg"></div></section>
+
+<section id="polls" class="rv"><h2>FUN POLLS</h2><p class="sub">Be honest. Nobody's judging.</p><div class="pl" id="pl"></div></section>
+
+<section id="messages" class="rv"><h2>LEAVE A PIECE OF YOURSELF</h2>
+<div class="chips-wrap"><p class="sub" style="margin:0">Messages from the class. New notes appear right away.</p><select id="msort" class="sortsel" aria-label="Sort messages"><option value="new">Newest first</option><option value="old">Oldest first</option></select></div>
+<div class="wall" id="wall"></div>
+<div class="row"><span id="mcnt" class="cnt"></span><button class="btn g" id="mmore">SHOW MORE MESSAGES</button></div>
+<form id="mf" class="glass"><input id="mn" maxlength="30" placeholder="Name / Nickname" aria-label="Name" required="required"/><textarea id="mt" maxlength="240" rows="3" placeholder="Write something for the class…" aria-label="Message" required="required"></textarea><button class="btn">POST MESSAGE</button></form></section>
+
+<section id="events" class="rv"><h2>WHAT'S HAPPENING?</h2><p class="sub">Save the dates.</p><div class="evs" id="ev"></div></section>
+<section id="connect" class="rv"><h2>FOLLOW THE FINAL CHAPTER</h2><p class="sub">Stay connected.</p><div class="socs" id="soc"></div></section>
+<footer><h2 class="cn"></h2><p class="gd gs"></p><p class="q">“The chapter ends.<br/>The memories don't.”</p><a class="btn g" href="#home">BACK TO TOP ↑</a></footer>
+
+<dialog id="lb" class="gallery"><div class="dlg"><button class="ib cl" aria-label="Close">✕</button>
+<div class="lbmain"><button class="navb prevb" id="lbp" aria-label="Previous photo">‹</button><div id="lbc"></div><button class="navb nextb" id="lbn" aria-label="Next photo">›</button></div>
+<small class="idx" id="lbidx"></small><div class="strip" id="lbstrip" role="group" aria-label="All photos"></div></div></dialog>
+<dialog id="mr" class="gallery msgdlg"><div class="dlg"><button class="ib cl" aria-label="Close">✕</button>
+<div class="lbmain"><button class="navb prevb" id="mrp" aria-label="Previous message">‹</button><div id="mrc"></div><button class="navb nextb" id="mrn" aria-label="Next message">›</button></div>
+<small class="idx" id="mridx"></small></div></dialog>
+<dialog id="am"><form id="af" class="dlg"><h3>Add your memory</h3><p class="sub">Your photo appears right away in the memory posts.</p><p class="am-as" id="amas" hidden></p>
+<input type="file" id="pf" accept="image/*" aria-label="Photo" required="required"/><input id="pn" maxlength="30" placeholder="Your name" aria-label="Your name" required="required"/><select id="pc" aria-label="Category"></select><textarea id="pp" maxlength="140" rows="2" placeholder="Caption" aria-label="Caption"></textarea>
+<button class="btn" id="afbtn" type="submit"><span class="spin" id="afspin" hidden></span><span id="afbtxt">SUBMIT MEMORY</span></button> <button type="button" class="btn g x">CANCEL</button></form></dialog>
+
+<!-- ============ MEMORY POSTS PAGE (hash route: #/posts and #/posts/POST_ID) ============ -->
+<div id="pv" hidden role="dialog" aria-modal="true" aria-label="Memory posts">
+<div class="pv-bg" aria-hidden="true"></div>
+<div class="pv-bar">
+<button class="pv-back" id="pvback" type="button" aria-label="Back to the memory board"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Back</span></button>
+<b class="pv-ttl cn"></b>
+<button class="pv-ib" id="pvadd" type="button" aria-label="Add your memory"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
+<button class="pv-me" id="pvme" type="button" hidden aria-label="Your profile"></button>
+</div>
+<div class="pv-wrap">
+<div class="pv-top"><h1>Memory posts</h1><p class="pv-sub" id="pvcount"></p></div>
+<div class="pv-adm" id="pvadm" hidden><span>Admin mode · posting as</span><div class="pv-seg" role="group" aria-label="Post as"><button type="button" data-as="official" aria-pressed="true">Official page</button><button type="button" data-as="me" aria-pressed="false">My profile</button></div></div>
+<div class="pv-filter"><div class="chips pv-chips" id="pchips" role="group" aria-label="Categories"></div><select id="vsort" class="sortsel" aria-label="Sort posts"><option value="new">Newest first</option><option value="old">Oldest first</option></select></div>
+<div class="pv-note" id="pvnote" hidden></div>
+<div id="pvlist"></div>
+<div class="pv-sent" id="pvsent" aria-hidden="true"></div>
+</div></div>
+
+<dialog id="pd" class="sheet" aria-labelledby="pdt"><form id="pdf" class="sh" autocomplete="off" novalidate>
+<button type="button" class="ib sh-x" id="pdx" aria-label="Close">✕</button>
+<h3 id="pdt">Choose a username</h3><p class="sh-sub" id="pds">No account or email needed. Your profile stays on this device.</p>
+<div class="pd-av"><label class="pd-pick" for="pdfile" id="pdav" tabindex="0" aria-label="Choose a profile photo"><span class="pd-ph" id="pdph"></span><span class="pd-cam" aria-hidden="true"><svg viewBox="0 0 24 24" width="15" height="15"><path d="M9 4l-1.5 2H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-2.5L15 4H9zm3 4.5a4 4 0 110 8 4 4 0 010-8z" fill="currentColor"/></svg></span></label><input type="file" id="pdfile" accept="image/*" hidden>
+<div><b>Profile photo</b><small id="pdavn">Optional.</small></div></div>
+<label class="sh-l" for="pdn">Username</label>
+<input id="pdn" maxlength="20" minlength="3" required dir="auto" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. night_owl">
+<small class="sh-h" id="pdnn"></small>
+<p class="sh-e" id="pde" role="alert" hidden></p>
+<div class="sh-a"><button class="btn" id="pdok" type="submit"><span class="spin" id="pdsp" hidden></span><span id="pdbt">SAVE AND CONTINUE</span></button><button type="button" class="btn g" id="pdc">CANCEL</button></div>
+</form></dialog>
+
+<dialog id="um" class="sheet" aria-labelledby="umt"><div class="sh">
+<button type="button" class="ib sh-x" id="umx" aria-label="Close">✕</button>
+<div class="um-who" id="umw"></div><h3 id="umt" class="vh">Badges</h3><p class="sh-sub">Badges show next to this name on every post and comment.</p>
+<div class="um-opts"><button type="button" class="um-opt" id="umv" aria-pressed="false"></button><button type="button" class="um-opt" id="uma" aria-pressed="false"></button></div>
+</div></dialog>
+
+<dialog id="ask" class="sheet ask" aria-labelledby="askt"><form method="dialog" class="sh">
+<h3 id="askt">Delete this?</h3><p class="sh-sub" id="askp"></p>
+<div class="sh-a"><button class="btn dng" value="ok">DELETE</button><button class="btn g" value="no">KEEP IT</button></div>
+</form></dialog>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/posts.js"></script>
+</body>
+</html>
