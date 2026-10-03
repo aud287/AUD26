@@ -12,7 +12,7 @@ window.SITE = {
   music: "assets/audio/music.mp3",       // put your mp3 here (plays with the intro)
   gradsound: "assets/audio/grad.mp3",                         // graduation-day sound, e.g. assets/audio/grad.mp3
   milestones: ``,                        // countdown sounds, one per line: 50=assets/audio/50days.mp3
-  backend: "https://script.google.com/macros/s/AKfycbxqHaFssyXDkjdcP7gXseylUmzI9YKdZ6Yw5oNL4veK5dLgw9g0Lwm2wgwFYYyYapocbg/exec",                           // Google Apps Script Web app URL (see README.md)
+  backend: "https://script.google.com/macros/s/AKfycby1x1xxg39KiDB7gZWzYDqVMT_cY8jb1U7MwOFOzJkrc7SL_LukkMr0unOUcJhNepb1Xg/exec",                           // Google Apps Script Web app URL (see README.md)
 
   intro: `SENIORS 2026
 5 years. 10 semesters. One dream.
