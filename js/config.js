@@ -6,6 +6,7 @@ window.SITE = {
   name: "طب الأزهر دمياط",
   logo: "assets/logo.png",                              // e.g. assets/logo.png  (empty = "YOUR LOGO" placeholder)
    adminBadge: "assets/admin-badge.png",
+   officialAvatar: "assets/official.png",
   frame: "assets/frame.png",             // square (1:1) PNG with a transparent middle — visitors upload a photo that sits behind it
   frameOpens: "2026-12-18T00:00:00",     // Frame tool stays locked with a "coming soon" overlay until this date/time. Leave "" to unlock it right away.
   date: "2026-12-19T13:00:00",           // graduation date & time
