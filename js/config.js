@@ -5,8 +5,6 @@
 window.SITE = {
   name: "طب الأزهر دمياط",
   logo: "assets/logo.png",                              // e.g. assets/logo.png  (empty = "YOUR LOGO" placeholder)
-   adminBadge: "assets/admin-badge.png",
-   officialAvatar: "assets/official.png",
   frame: "assets/frame.png",             // square (1:1) PNG with a transparent middle — visitors upload a photo that sits behind it
   frameOpens: "2026-12-18T00:00:00",     // Frame tool stays locked with a "coming soon" overlay until this date/time. Leave "" to unlock it right away.
   date: "2026-12-19T13:00:00",           // graduation date & time
@@ -14,7 +12,7 @@ window.SITE = {
   music: "assets/audio/music.mp3",       // put your mp3 here (plays with the intro)
   gradsound: "assets/audio/grad.mp3",                         // graduation-day sound, e.g. assets/audio/grad.mp3
   milestones: ``,                        // countdown sounds, one per line: 50=assets/audio/50days.mp3
-  backend: "https://script.google.com/macros/s/AKfycby1x1xxg39KiDB7gZWzYDqVMT_cY8jb1U7MwOFOzJkrc7SL_LukkMr0unOUcJhNepb1Xg/exec",                           // Google Apps Script Web app URL (see README.md)
+  backend: "https://script.google.com/macros/s/AKfycbxYJoeSWfvarj8VhskJCy0itEOVrqHbJgcDn2LxSX38wVPdDnpCHOTK6XNGAYOkfafk/exec",                           // Google Apps Script Web app URL (see README.md)
 
   intro: `SENIORS 2026
 5 years. 10 semesters. One dream.

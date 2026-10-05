@@ -11,6 +11,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+<link rel="preconnect" href="https://script.google.com">
+<link rel="preconnect" href="https://script.googleusercontent.com">
+<link rel="preconnect" href="https://lh3.googleusercontent.com">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/posts.css">
 <!-- Fonts + Font Awesome load without blocking first paint; text still renders (system font) then swaps in -->
@@ -48,7 +51,7 @@
 <div class="st"><div class="class-logo"></div><p class="eyebrow cn"></p><h1 id="ht">THE LAST CHAPTER</h1><p class="gd" id="hs"></p>
 <div class="glass cd" id="countdown" role="timer"><div><b id="d">0</b><small>DAYS</small></div><div><b id="h">00</b><small>HOURS</small></div><div><b id="m">00</b><small>MIN</small></div><div><b id="s">00</b><small>SEC</small></div></div>
 <p class="q">“One last chapter.<br/>A thousand memories.”</p></div></section>
-<div class="ticker" aria-hidden="true"><div id="tk"></div></div>
+<div class="tkw"><div class="ticker" aria-hidden="true"><div id="tk"></div></div></div>
 
 <section id="memories" class="rv"><h2>LATEST MEMORIES</h2><p class="sub">Pinned to the board, one chapter at a time. Tap any photo to open it.</p>
 <div class="chips-wrap"><div class="chips" id="chips" role="group" aria-label="Categories"></div><select id="psort" class="sortsel" aria-label="Sort memories"><option value="new">Newest first</option><option value="old">Oldest first</option></select></div>
@@ -104,12 +107,14 @@
 <div class="pv-bar">
 <button class="pv-back" id="pvback" type="button" aria-label="Back to the memory board"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Back</span></button>
 <b class="pv-ttl cn"></b>
+<button class="pv-ib ghost" id="pvbell" type="button" aria-label="Notifications" aria-haspopup="true" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="pv-bdg" id="pvbdg" hidden></span></button>
 <button class="pv-ib" id="pvadd" type="button" aria-label="Add your memory"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></button>
 <button class="pv-me" id="pvme" type="button" hidden aria-label="Your profile"></button>
+<div class="pv-nf" id="pvnf" hidden role="region" aria-label="Notifications"><div class="pv-nfh"><b>Notifications</b></div><div class="pv-nfl" id="pvnfl"></div></div>
 </div>
 <div class="pv-wrap">
 <div class="pv-top"><h1>Memory posts</h1><p class="pv-sub" id="pvcount"></p></div>
-<div class="pv-adm" id="pvadm" hidden><span>Admin mode · posting as</span><div class="pv-seg" role="group" aria-label="Post as"><button type="button" data-as="official" aria-pressed="true">Official page</button><button type="button" data-as="me" aria-pressed="false">My profile</button></div></div>
+<div class="pv-adm" id="pvadm" hidden><span>Admin mode · posting as</span><div class="pv-seg" role="group" aria-label="Post as"><button type="button" data-as="official" aria-pressed="true">Official page</button><button type="button" data-as="me" aria-pressed="false">My profile</button></div><div class="pv-mk" role="group" aria-label="Create a post"><button type="button" data-k="text">+ Text post</button><button type="button" data-k="event">+ Occasion</button><button type="button" data-k="poll">+ Poll</button></div></div>
 <div class="pv-filter"><div class="chips pv-chips" id="pchips" role="group" aria-label="Categories"></div><select id="vsort" class="sortsel" aria-label="Sort posts"><option value="new">Newest first</option><option value="old">Oldest first</option></select></div>
 <div class="pv-note" id="pvnote" hidden></div>
 <div id="pvlist"></div>
@@ -126,6 +131,30 @@
 <small class="sh-h" id="pdnn"></small>
 <p class="sh-e" id="pde" role="alert" hidden></p>
 <div class="sh-a"><button class="btn" id="pdok" type="submit"><span class="spin" id="pdsp" hidden></span><span id="pdbt">SAVE AND CONTINUE</span></button><button type="button" class="btn g" id="pdc">CANCEL</button></div>
+</form></dialog>
+
+<dialog id="np" class="sheet" aria-labelledby="npt"><form id="npf" class="sh" novalidate>
+<button type="button" class="ib sh-x" id="npx" aria-label="Close">✕</button>
+<h3 id="npt">New post</h3><p class="sh-sub">Only the admin can publish these. They appear in the memory posts page, never on the memory board.</p>
+<div class="pv-seg np-k" role="group" aria-label="Post type"><button type="button" data-k="text" aria-pressed="true">Text</button><button type="button" data-k="event" aria-pressed="false">Occasion</button><button type="button" data-k="poll" aria-pressed="false">Poll</button></div>
+<div class="np-sec" data-for="text">
+<label class="sh-l" for="npt1">Title <small>(optional)</small></label><input id="npt1" maxlength="100" dir="auto">
+<label class="sh-l" for="npb1">Text</label><textarea id="npb1" rows="5" maxlength="1500" dir="auto" placeholder="Write your announcement…"></textarea>
+<span class="sh-l">Style</span><div class="np-th" id="npth" role="group" aria-label="Style"><button type="button" data-t="wine" class="th-wine" aria-label="Wine" aria-pressed="true"></button><button type="button" data-t="gold" class="th-gold" aria-label="Gold" aria-pressed="false"></button><button type="button" data-t="sky" class="th-sky" aria-label="Sky" aria-pressed="false"></button><button type="button" data-t="mint" class="th-mint" aria-label="Mint" aria-pressed="false"></button></div>
+</div>
+<div class="np-sec" data-for="event" hidden>
+<div class="np-row"><div class="np-em"><label class="sh-l" for="npem">Emoji</label><input id="npem" maxlength="4" placeholder="🎓"></div><div class="np-grow"><label class="sh-l" for="npt2">Occasion name</label><input id="npt2" maxlength="100" dir="auto" placeholder="Graduation ceremony"></div></div>
+<label class="sh-l" for="npwh">Date and time</label><input id="npwh" type="datetime-local">
+<label class="sh-l" for="nppl">Place <small>(optional)</small></label><input id="nppl" maxlength="80" dir="auto">
+<label class="sh-l" for="npb2">Details <small>(optional)</small></label><textarea id="npb2" rows="3" maxlength="600" dir="auto"></textarea>
+</div>
+<div class="np-sec" data-for="poll" hidden>
+<label class="sh-l" for="npt3">Question</label><input id="npt3" maxlength="100" dir="auto" placeholder="Where should we hold the party?">
+<span class="sh-l">Options <small>(2 to 6)</small></span><div class="np-opts" id="npo"></div><button type="button" class="np-add" id="npadd">+ Add option</button>
+</div>
+<label class="sh-l" for="npcat">Also show under a category <small>(optional)</small></label><select id="npcat"><option value="">None (only under ALL)</option></select>
+<p class="sh-e" id="npe" role="alert" hidden></p>
+<div class="sh-a"><button class="btn" id="npok" type="submit"><span class="spin" id="npsp" hidden></span><span>PUBLISH</span></button><button type="button" class="btn g" id="npcx">CANCEL</button></div>
 </form></dialog>
 
 <dialog id="um" class="sheet" aria-labelledby="umt"><div class="sh">

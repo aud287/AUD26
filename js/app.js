@@ -105,7 +105,7 @@ $('#nv').onclick=()=>$('#nv').classList.remove('open');
 $('#sh').onclick=()=>{const u={title:document.title,url:location.href};if(navigator.share)navigator.share(u).catch(()=>{});else if(navigator.clipboard)navigator.clipboard.writeText(u.url).then(()=>toast('Link copied!'))};
 
 /* ---- CORKBOARD: photos + events pinned with string; board shows a fixed set, "more" opens a flip-through gallery ---- */
-let MEM=MEMORIES,cat='ALL',sortDir='new',LIKES={},CC={};const BOARD_N=12;
+let MEM=MEMORIES,cat='ALL',sortDir='new',LIKES={},CC={},NOTES=[],PC={};const BOARD_N=12;
 /* every photo needs a stable id (comments + loves are saved against it). Backend photos already have one; config/demo photos get one from a hash of url+title+date */
 const h32=t=>{let h=2166136261;for(let i=0;i<t.length;i++){h^=t.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0).toString(36)};
 const pidOf=m=>m.pid||(m.pid=m.id||('c'+h32(String(m.url||m.thumb||'')+'|'+(m.title||'')+'|'+(m.date||''))));
@@ -389,9 +389,11 @@ function build(px,rp){const ph=[...rp.map(vp),...px];if(!ph.length)ph.push(...ME
 /* admin: open  yoursite/#admin  and enter the key. The key is checked by the backend; nothing is unlocked on a wrong key.
    AS = who the admin posts as: 'official' (the site's own page) or 'me' (this device's normal visitor profile) — the two never mix. */
 let ADM=false,ADK='',AS='official';try{AS=sessionStorage.getItem('aud_as')=='me'?'me':'official'}catch(e){}
-async function del(type,id){if(!await ask('Delete this '+(type=='photo'?'photo':'message')+'?','It disappears for everyone'+(type=='photo'?', along with its comments and loves.':'.')))return;
+async function del(type,id){const what=type=='photo'?'photo':type=='note'?'post':'message';
+ if(!await ask('Delete this '+what+'?','It disappears for everyone'+(type=='message'?'.':', along with its comments and loves.')))return;
  const r=await api({action:'delete',type,id,key:ADK});if(!r.ok){toast('Not deleted. Check the admin key.');return}
- if(type=='photo'){MEM=MEM.filter(m=>m.id!=id);board();window.PV&&PV.refresh()}else{MSG=MSG.filter(m=>m.id!=id);msgs(MSG)}toast('Deleted.')}
+ if(type=='photo'){MEM=MEM.filter(m=>m.id!=id);board()}else if(type=='note')NOTES=NOTES.filter(n=>n.id!=id);else{MSG=MSG.filter(m=>m.id!=id);msgs(MSG)}
+ if(type!='message'&&window.PV)PV.refresh(1);toast('Deleted.')}
 async function adminInit(){let k='';try{k=sessionStorage.getItem('adk')||''}catch(e){}
  if(location.hash=='#admin'&&!k)k=prompt('Admin key')||'';if(!k)return;
  const r=await api({action:'auth',key:k});
@@ -399,6 +401,6 @@ async function adminInit(){let k='';try{k=sessionStorage.getItem('adk')||''}catc
  else{try{sessionStorage.removeItem('adk')}catch(e){}toast(r.error=='unset'?'Change ADMIN_KEY in Code.gs first.':'Admin key not accepted.')}}
 adminInit();
 function shrink(f){return new Promise((res,rej)=>{const i=new Image(),u=URL.createObjectURL(f);i.onload=()=>{const s=Math.min(1,1200/Math.max(i.width,i.height)),c=document.createElement('canvas');c.width=Math.round(i.width*s);c.height=Math.round(i.height*s);c.getContext('2d').drawImage(i,0,0,c.width,c.height);URL.revokeObjectURL(u);res(c.toDataURL('image/jpeg',.82))};i.onerror=rej;i.src=u})}
-(async()=>{const[px,rp]=await Promise.all([posts(),remote()]);MEM=build(px,rp.photos||[]);LIKES=rp.likes||{};CC=rp.cc||{};chipsR();board();
+(async()=>{const[px,rp]=await Promise.all([posts(),remote()]);MEM=build(px,rp.photos||[]);LIKES=rp.likes||{};CC=rp.cc||{};NOTES=rp.notes||[];PC=rp.pc||{};chipsR();board();
  MSG=BACKEND.enabled?(rp.messages||[]):MESSAGES;msgs(MSG);
  const v=rp.votes||{};POLLS.forEach((p,i)=>p.o.forEach((o,j)=>o[1]=v[i+'_'+j]||0));pollsR(POLLS);window.DATA_READY=1;window.PV&&PV.ready()})();

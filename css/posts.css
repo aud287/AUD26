@@ -70,7 +70,7 @@ button.pv-n{cursor:pointer;text-decoration:underline dotted #8f244066;text-under
 .pv-av{--s:40px;flex:0 0 var(--s);width:var(--s);height:var(--s);border-radius:50%;display:grid;place-items:center;overflow:hidden;color:#fff;
  font:700 calc(var(--s)*.42)/1 'DM Sans',var(--ar),sans-serif;background:hsl(var(--h,340) 42% 44%);box-shadow:0 0 0 2px #fff,0 2px 8px #6b1a2e33;user-select:none}
 .pv-av img{width:100%;height:100%;object-fit:cover}
-.pv-av.logo{background:#fffdf6}.pv-av.logo img{object-fit:contain;padding:0%}
+.pv-av.logo{background:#fffdf6}.pv-av.logo img{object-fit:contain;padding:12%}
 .pv-av.anon{background:#c9b8a6}
 
 .pv-media{position:relative;margin:0 10px;border-radius:15px;overflow:hidden;background:var(--cr);cursor:zoom-in;box-shadow:inset 0 0 0 1px #3a1f2614;-webkit-tap-highlight-color:transparent}
@@ -190,3 +190,138 @@ dialog.sheet::backdrop{background:#3a1f26cc;-webkit-backdrop-filter:blur(6px);ba
 
 /* a locked field (the official page / your own username) reads as fixed, not as an empty input */
 #pn[readonly]{background:#f3ebdc;color:var(--wine);font-weight:700;cursor:default}
+
+/* =====================================================================================
+   v2 — notifications, admin posts, comment loves, stickers + photos in comments, performance
+   ===================================================================================== */
+
+/* performance: while the posts page is open the page behind it is invisible, so stop painting and animating it (~70% less idle CPU) */
+body.pvopen>*:not(#pv):not(dialog):not(#toast):not(#intro){visibility:hidden!important}
+body.pvopen *:not(#pv):not(#pv *):not(#toast):not(#toast *):not(dialog):not(dialog *){animation-play-state:paused!important}
+
+/* ---------- bell ---------- */
+.pv-ib{position:relative}
+.pv-ib.ghost{background:#fff8;color:var(--wine);border:1px solid #8f244044;box-shadow:none}
+.pv-ib.ghost:hover{background:#fff;transform:scale(1.08)}
+.pv-bdg{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:#d6243f;color:#fff;font:700 11px/20px 'DM Sans',sans-serif;text-align:center;box-shadow:0 0 0 2px #fbf4e9;animation:pvpop .5s var(--e)}
+.pv-nf{position:absolute;top:calc(100% + 8px);right:max(12px,calc((100% - 660px)/2));z-index:6;display:flex;flex-direction:column;width:min(94vw,390px);max-height:min(72vh,540px);overflow:hidden;background:#fffdf7;border:1px solid #fff;border-radius:20px;box-shadow:0 24px 60px #3a1f2655}
+.pv-nfh{padding:15px 18px 11px;border-bottom:1px solid #8f244018;font:700 18px 'Playfair Display',var(--ar),serif;color:var(--wine)}
+.pv-nfl{overflow-y:auto;overscroll-behavior:contain}
+.pv-ni{display:flex;align-items:flex-start;gap:12px;width:100%;padding:12px 16px;text-align:start;border-bottom:1px solid #8f244012;transition:background .2s}
+.pv-ni:hover{background:#8f24400d}
+.pv-ni.new{background:#fff4e2}
+.pv-ni.new:after{content:"";flex:0 0 9px;width:9px;height:9px;margin:6px 0 0 auto;border-radius:50%;background:#d6243f}
+.pv-nt2{min-width:0;flex:1}
+.pv-nl{font-size:14px;line-height:1.45}.pv-nl b{color:var(--wine)}
+.pv-nq{margin-top:2px;font-size:13px;opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv-na{margin-top:2px;font-size:12px;font-weight:600;opacity:.55}
+.pv-nfe{display:grid;justify-items:center;gap:8px;padding:30px 22px;text-align:center}
+.pv-nfe b{font:700 18px 'Playfair Display',var(--ar),serif;color:var(--wine)}.pv-nfe p{margin:0 0 6px;font-size:14px;opacity:.7}
+
+/* ---------- admin strip: create buttons ---------- */
+.pv-mk{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+.pv-mk button{padding:8px 14px;border-radius:99px;background:var(--gold);color:var(--ink);font-size:12px;font-weight:700;transition:transform .25s var(--e)}
+.pv-mk button:hover{transform:scale(1.05)}
+
+/* ---------- admin posts: text / occasion / poll ---------- */
+.pv-kind{display:inline-block;margin-right:8px;padding:2px 9px;border-radius:99px;background:#8f244018;color:var(--bur);font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;vertical-align:1px}
+.pv-kind.event{background:#c8a25a33;color:#6e4d0c}.pv-kind.poll{background:#4f86d422;color:#2a5aa0}
+.pv-nb{position:relative;margin:0 10px;border-radius:15px;overflow:hidden}
+.pv-tx{display:flex;flex-direction:column;justify-content:center;gap:12px;min-height:230px;padding:34px 24px 30px;color:#fff;cursor:default}
+.pv-tx.has-tag{padding-top:66px}
+.pv-tx:before{content:"\201C";position:absolute;right:14px;top:-18px;font:900 150px/1 'Playfair Display',Georgia,serif;opacity:.16;pointer-events:none}
+.pv-tx.th-wine{background:radial-gradient(circle at 85% 12%,#ffffff26,#0000 45%),linear-gradient(135deg,#9a2a49,#6b1a2e)}
+.pv-tx.th-gold{background:radial-gradient(circle at 85% 12%,#ffffff55,#0000 45%),linear-gradient(135deg,#f0cf7d,#c8a25a);color:#3a1f26}
+.pv-tx.th-sky{background:radial-gradient(circle at 85% 12%,#ffffff33,#0000 45%),linear-gradient(135deg,#5b8fd9,#2d5aa3)}
+.pv-tx.th-mint{background:radial-gradient(circle at 85% 12%,#ffffff55,#0000 45%),linear-gradient(135deg,#9adcb9,#3f9f78);color:#12362a}
+.pv-nt{margin:0;font:900 clamp(22px,5.4vw,28px)/1.25 'Playfair Display',var(--ar),Georgia,serif;overflow-wrap:anywhere}
+.pv-tx .pv-nt{color:inherit}
+.pv-nbody{margin:0;font-size:clamp(16px,4.2vw,18.5px);line-height:1.65;font-weight:500;white-space:pre-wrap;overflow-wrap:anywhere}
+
+.pv-ev{background:linear-gradient(135deg,#fffaf0,#fff0d6);border:1.5px solid #c8a25a66}
+.pv-evw{display:flex;gap:16px;align-items:flex-start;padding:22px 18px 20px}
+.pv-ev.has-tag .pv-evw{padding-top:58px}
+.pv-ed{flex:0 0 74px;display:grid;justify-items:center;gap:0;padding:9px 4px 8px;border-radius:15px;background:linear-gradient(160deg,#9a2a49,#6b1a2e);color:#fff;box-shadow:0 8px 18px #6b1a2e44;text-align:center}
+.pv-ed b{font:900 34px/1.05 'Playfair Display',Georgia,serif}
+.pv-edm{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.9}.pv-edy{font-size:11px;opacity:.7}
+.pv-ei{min-width:0;flex:1;display:grid;gap:8px}
+.pv-et{display:flex;align-items:center;gap:10px}.pv-et .pv-nt{color:var(--wine)}
+.pv-eemo{flex:0 0 auto;font-size:30px;line-height:1}
+.pv-emeta{display:grid;gap:3px;font-size:13.5px;font-weight:600;color:#3a1f26cc}
+.pv-ev .pv-nbody{font-size:14.5px;font-weight:400}
+.pv-st{justify-self:start;padding:4px 12px;border-radius:99px;font-size:12px;font-weight:700;background:#c8a25a33;color:#6e4d0c}
+.pv-st.now{background:#2f9e6322;color:#1b7a48}.pv-st.past{background:#3a1f2614;color:#3a1f2699}
+
+.pv-poll{display:grid;gap:12px;padding:24px 18px 18px;background:linear-gradient(135deg,#fffdf7,#f6ecda);border:1.5px solid #8f244026}
+.pv-poll.has-tag{padding-top:58px}
+.pv-poll .pv-nt{color:var(--wine)}.pv-poll .pv-nbody{font-size:14.5px;font-weight:400}
+.pv-opts{display:grid;gap:9px}
+.pv-opt{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:50px;padding:0 16px;overflow:hidden;border-radius:14px;background:#fff;border:1.5px solid #8f244033;text-align:start;font-weight:600;font-size:15px;transition:border-color .25s,transform .25s var(--e)}
+.pv-opt:not(.ro):hover{border-color:var(--bur);transform:translateY(-1px)}
+.pv-opt.ro{cursor:default}
+.pv-opt.on{border-color:var(--wine)}
+.pv-of{position:absolute;inset:0 auto 0 0;width:0;background:#8f24401f;transition:width .7s var(--e)}
+.pv-opt.on .pv-of{background:#8f244038}
+.pv-ol{position:relative;overflow-wrap:anywhere}.pv-opt.on .pv-ol:before{content:"\2713\00a0";color:var(--wine);font-weight:700}
+.pv-op{position:relative;font-style:normal;font-weight:700;color:var(--wine)}
+.pv-pmeta{font-size:12.5px;font-weight:600;opacity:.65}
+
+/* ---------- loves on comments ---------- */
+.pv-cl{flex:0 0 30px;display:flex;flex-direction:column;align-items:center;gap:1px;align-self:flex-start;margin-top:8px;color:#3a1f2699;transition:color .2s}
+.pv-cl svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.pv-cl span{font-size:11px;font-weight:700;line-height:1}
+.pv-cl:hover{color:#c2243a}
+.pv-cl[aria-pressed=true]{color:#c2243a}.pv-cl[aria-pressed=true] svg{fill:#c2243a;animation:pvpop .45s var(--e)}
+.pv-cm.flash>.pv-cbody>.pv-bub{animation:pvcf 1.8s ease}
+@keyframes pvcf{0%,55%{box-shadow:0 0 0 3px var(--gold),0 5px 14px #6b1a2e0f}100%{box-shadow:0 1px 0 #8f244014,0 5px 14px #6b1a2e0f}}
+
+/* ---------- stickers + photos in comments ---------- */
+.pv-cst{display:block;width:92px;height:92px;margin:6px 0 0;object-fit:contain;filter:drop-shadow(0 6px 6px #3a1f2630)}
+.pv-cph{display:block;margin:8px 0 2px;padding:0;line-height:0;border-radius:12px;overflow:hidden;cursor:zoom-in;max-width:100%}
+.pv-cph img{display:block;max-width:min(250px,100%);max-height:290px;width:auto;height:auto;border-radius:12px;background:var(--cr)}
+.pv-iw{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;gap:8px}
+.pv-pre{display:flex}
+.pv-pi{position:relative;display:inline-block;line-height:0}
+.pv-pi img{display:block;max-height:110px;max-width:100%;border-radius:12px;box-shadow:0 4px 12px #3a1f2633}
+.pv-pi.stk img{width:76px;height:76px;object-fit:contain;padding:6px;background:#fff;box-shadow:0 0 0 1px #8f244026}
+.pv-pi button{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;line-height:1;display:grid;place-items:center;box-shadow:0 0 0 2px #fbf4e9}
+.pv-ic{flex:0 0 34px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#3a1f26a6;transition:background .2s,color .2s}
+.pv-ic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pv-ic:hover,.pv-ic[aria-expanded=true]{background:#8f244014;color:var(--bur)}
+.pv-stk{position:absolute;left:0;right:0;bottom:calc(100% + 8px);z-index:4;display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:4px;max-height:236px;overflow-y:auto;padding:10px;background:#fffdf7;border:1px solid #8f244033;border-radius:18px;box-shadow:0 18px 40px #3a1f2640;overscroll-behavior:contain}
+.pv-stk button{aspect-ratio:1;padding:5px;border-radius:12px;transition:background .2s,transform .25s var(--e)}
+.pv-stk button:hover,.pv-stk button:focus-visible{background:#8f244014;transform:scale(1.12)}
+.pv-stk img{width:100%;height:100%;object-fit:contain}
+.pv-form.rp .pv-ic{flex-basis:30px;width:30px;height:30px}
+
+/* ---------- publish dialog ---------- */
+#np .pv-seg{align-self:flex-start;background:#8f244014}
+#np .pv-seg button{color:var(--wine)}
+#np .pv-seg button[aria-pressed=true]{background:var(--wine);color:#fff}
+.np-sec{display:flex;flex-direction:column;gap:8px}
+.sh textarea{margin:0;min-height:96px;resize:vertical}
+.sh select{margin:0}
+.sh-l small{font-weight:600;opacity:.6}
+.np-th{display:flex;gap:12px;padding:2px 2px 4px}
+.np-th button{width:40px;height:40px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px #8f244033;transition:box-shadow .2s,transform .25s var(--e)}
+.np-th button:hover{transform:scale(1.1)}.np-th button[aria-pressed=true]{box-shadow:0 0 0 3px var(--wine)}
+.th-wine{background:linear-gradient(135deg,#9a2a49,#6b1a2e)}.th-gold{background:linear-gradient(135deg,#f0cf7d,#c8a25a)}.th-sky{background:linear-gradient(135deg,#5b8fd9,#2d5aa3)}.th-mint{background:linear-gradient(135deg,#9adcb9,#3f9f78)}
+.np-row{display:flex;gap:10px}.np-em{flex:0 0 78px}.np-grow{flex:1;min-width:0}.np-em input{text-align:center}
+.np-orow{display:flex;gap:8px;margin-bottom:8px}.np-orow input{margin:0}
+.np-orow button{flex:0 0 40px;border-radius:50%;background:#8f244014;color:var(--wine);font-size:13px}
+.np-add{align-self:flex-start;padding:4px 2px;font-weight:700;color:var(--bur)}
+
+@media(max-width:520px){
+ .pv-tx{padding:30px 18px 26px}.pv-evw{gap:12px;padding:20px 14px 18px}.pv-ed{flex-basis:64px}
+ .pv-nb{margin:0 7px}
+}
+
+/* the comment box adapts: when there is no room (replies, small phones) the photo / sticker / Post buttons drop to a second row */
+.pv-in{flex-wrap:wrap;row-gap:0}
+.pv-in textarea{flex:1 1 104px}
+.pv-send{margin-left:auto}
+.pv-cmeta{flex-wrap:wrap;gap:2px 16px}.pv-cmeta>*{white-space:nowrap}
+
+/* the tilted ticker (negative margins + rotate) was ~12px wider than a phone, which widened the whole page and pushed fixed bars off the right edge */
+.tkw{overflow-x:clip}
+#frame{overflow-x:clip}   /* its "coming soon" lock overlay sticks out 14px on every side and was 1px wider than a 320px phone */
